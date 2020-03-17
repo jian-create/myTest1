@@ -1,0 +1,85 @@
+<!DOCTYPE html οndragstart="return false;" οncοntextmenu="return false;">
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>3D旋转相册</title>
+	<style type="text/css">
+		body{
+			margin:0;
+			background-color: black;
+			overflow: hidden;
+		}
+		.perspective{
+			perspective: 800px;
+		}
+		#warp{
+			width: 130px;
+			height:200px;
+			margin: 3 	00px auto;
+			position: relative;
+			transform-style: preserve-3d;
+			transform: rotateX(-20deg) rotateY(0deg);
+		}
+		#warp img{
+			position: absolute;
+			width: 130px;
+			height:200px;
+
+		}
+	</style>
+</head>
+<body>
+	<div class="perspective">
+		<div id="warp">
+			<img src="./image/maotouying-001.jpg" alt="">
+			<img src="./image/maotouying-002.jpg" alt="">
+			<img src="./image/maotouying-003.jpg" alt="">
+			<img src="./image/maotouying-004.jpg" alt="">
+			<img src="./image/maotouying-005.jpg" alt="">
+			<img src="./image/maotouying-006.jpg" alt="">
+			<img src="./image/maotouying-007.jpg" alt="">
+			<img src="./image/maotouying-008.jpg" alt="">
+			<img src="./image/maotouying-009.jpg" alt="">
+			<img src="./image/maotouying-010.jpg" alt="">
+			<img src="./image/maotouying-011.jpg" alt="">
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+		var oImg=document.getElementsByTagName("img");
+		var length=oImg.length;
+		var deg=360/length;
+		var newX,newY,lastX,lastY,moveX,moveY,rotX = -20,rotY = 0;
+		var oWarp=document.getElementById("warp");
+		window.onmousedown=function(e){
+				lastX=e.clientX;
+				lastY=e.clientY;
+
+			this.onmousemove=function(e){
+				console.log(e);
+				newX=e.clientX;
+				newY=e.clientY;
+
+				moveX=newX-lastX;
+				moveY=newY-lastY;
+
+				rotX-=moveY*0.2;
+				rotY+=moveX*0.1;
+				oWarp.style.transform="rotateX("+rotX+"deg) rotateY("+rotY+"deg)" ;
+				
+				lastX=newX;
+				lastY=newY;
+			}
+			this.onmouseup=function(e){
+				this.onmousemove=null;
+			}
+		}
+		window.onload=function(){
+			Array.prototype.forEach.call(oImg,function(ele,index,self){
+				ele.style.transform="rotateY("+deg*index+"deg) translateZ(350px)";
+				ele.style.transition="1s "+(length-index)*0.1+"s";
+			});	
+		}
+				
+</script>
+</html>
